@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+html, body, #root { height: 100%; }
+body {
+  @apply bg-bg0 text-cool font-sans antialiased;
+  background-image:
+    linear-gradient(rgba(124,212,247,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,212,247,0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+*:focus-visible { outline: 2px solid #7CD4F7; outline-offset: 2px; }
+::selection { background: rgba(124,212,247,0.3); }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #1c2733; border-radius: 4px; }
+
+@layer components {
+  .panel { @apply bg-panel/80 border border-white/[0.07] rounded-md; backdrop-filter: blur(6px); }
+  .panel-title { @apply text-[11px] tracking-[0.14em] text-ice-dim uppercase font-mono; }
+  .mono { @apply font-mono; }
+  .input { @apply w-full bg-bg2 border border-white/10 rounded px-3 py-2 text-sm text-cool placeholder:text-slate-500 focus:border-ice/60 focus:outline-none; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded px-4 py-2 text-xs font-semibold tracking-[0.08em] transition-colors disabled:opacity-40 disabled:cursor-not-allowed; }
+  .btn-primary { @apply btn bg-ice text-bg0 hover:bg-cool; }
+  .btn-ghost { @apply btn border border-white/15 text-cool hover:border-ice/60 hover:text-ice; }
+  .btn-danger { @apply btn border border-crit/50 text-crit hover:bg-crit/10; }
+}
+.scanline { position: relative; }
+.scanline::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 3px);
+}
+@media (prefers-reduced-motion: reduce) { * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+
+html[data-rocket-motion="reduced"] * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }

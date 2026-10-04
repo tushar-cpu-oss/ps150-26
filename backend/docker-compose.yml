@@ -1,0 +1,26 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    # Local development only: no auth, not published to the host.
+    # For any shared/production deployment enable authentication and put credentials in .env.
+
+  api:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      MONGODB_URI: mongodb://mongo:27017        # service name, overrides .env for the container
+      YOLO_MODEL_PATH: /app/models/yolo11n.pt   # put weights in ./models (mounted below)
+    depends_on:
+      - mongo
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./storage:/app/storage
+      - ./models:/app/models
+
+volumes:
+  mongo_data:
